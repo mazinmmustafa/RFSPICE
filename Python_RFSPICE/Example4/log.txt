@@ -1,0 +1,38 @@
+Network 1: consist of 4 Devices
+
+Device 1:
+Node a1 in Port 1 from Device 1 is connected to: 
+Node b1 in Port 1 from Device 1 is connected to: a1 from Device 1 ((0.111+0j)), a2 from Device 1 ((0.112+0j)), 
+Node a2 in Port 2 from Device 1 is connected to: b1 from Device 4 (1.0), 
+Node b2 in Port 2 from Device 1 is connected to: a1 from Device 1 ((0.121+0j)), a2 from Device 1 ((0.122+0j)), 
+
+Device 2:
+Node a1 in Port 1 from Device 2 is connected to: b2 from Device 4 (1.0), 
+Node b1 in Port 1 from Device 2 is connected to: a1 from Device 2 ((0.211+0j)), a2 from Device 2 ((0.212+0j)), 
+Node a2 in Port 2 from Device 2 is connected to: 
+Node b2 in Port 2 from Device 2 is connected to: a1 from Device 2 ((0.221+0j)), a2 from Device 2 ((0.222+0j)), 
+
+Device 3:
+Node a1 in Port 1 from Device 3 is connected to: b3 from Device 4 (1.0), 
+Node b1 in Port 1 from Device 3 is connected to: a1 from Device 3 ((0.311+0j)), a2 from Device 3 ((0.312+0j)), 
+Node a2 in Port 2 from Device 3 is connected to: 
+Node b2 in Port 2 from Device 3 is connected to: a1 from Device 3 ((0.321+0j)), a2 from Device 3 ((0.322+0j)), 
+
+Device 4:
+Node a1 in Port 1 from Device 4 is connected to: b2 from Device 1 (1.0), 
+Node b1 in Port 1 from Device 4 is connected to: a1 from Device 4 ((-0.3333333333333333+0j)), a2 from Device 4 ((0.6666666666666666+0j)), a3 from Device 4 ((0.6666666666666666+0j)), 
+Node a2 in Port 2 from Device 4 is connected to: b1 from Device 2 (1.0), 
+Node b2 in Port 2 from Device 4 is connected to: a1 from Device 4 ((0.6666666666666666+0j)), a2 from Device 4 ((-0.3333333333333333+0j)), a3 from Device 4 ((0.6666666666666666+0j)), 
+Node a3 in Port 3 from Device 4 is connected to: b1 from Device 3 (1.0), 
+Node b3 in Port 3 from Device 4 is connected to: a1 from Device 4 ((0.6666666666666666+0j)), a2 from Device 4 ((0.6666666666666666+0j)), a3 from Device 4 ((-0.3333333333333333+0j)), 
+
+Port 1 from Device 1 is Excitation Port 1 (globally)
+Port 2 from Device 2 is Excitation Port 2 (globally)
+Port 2 from Device 3 is Excitation Port 3 (globally)
+
+Port 2 from Device 1 is connected to Port 1 from Device 4
+Port 1 from Device 2 is connected to Port 2 from Device 4
+Port 1 from Device 3 is connected to Port 3 from Device 4
+Port 1 from Device 4 is connected to Port 2 from Device 1
+Port 2 from Device 4 is connected to Port 1 from Device 2
+Port 3 from Device 4 is connected to Port 1 from Device 3

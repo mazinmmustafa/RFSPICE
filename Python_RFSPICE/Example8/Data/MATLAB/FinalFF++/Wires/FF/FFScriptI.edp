@@ -1,0 +1,89 @@
+// Output File
+ofstream fileR("FF/CMatrixR.dat");
+ofstream fileI("FF/CMatrixI.dat");
+
+// Constants
+real eps0= 8.85418781280000E-12;
+int NCond=2;
+
+// Conductor 0
+real x0= 0.00000000000000E+00;
+real y0= 0.00000000000000E+00;
+real r0= 1.00000000000000E-03;
+real rI0= 2.00000000000000E-03;
+real EPS0= 4.00000000000000E+00;
+real tand0= 1.00000000000000E-03;
+
+// Conductor 1
+real x1=-5.00000000000000E-03;
+real y1= 1.00000000000000E-02;
+real r1= 1.00000000000000E-03;
+real rI1= 2.00000000000000E-03;
+real EPS1= 4.00000000000000E+00;
+real tand1= 1.00000000000000E-03;
+
+// Conductor 2
+real x2= 5.00000000000000E-03;
+real y2= 1.00000000000000E-02;
+real r2= 1.00000000000000E-03;
+real rI2= 2.00000000000000E-03;
+real EPS2= 4.00000000000000E+00;
+real tand2= 1.00000000000000E-03;
+
+// Domain
+real rd= 5.59016994374947E-02;
+
+// Mesh Resolution
+real NsAir=50;
+real NsCond=50;
+real NsDiel=50;
+
+// Mesh
+border C0(t=0, 2*pi) {x=x0+r0*cos(t); y=y0+r0*sin(t);}
+border CI0(t=0, 2*pi) {x=x0+rI0*cos(t); y=y0+rI0*sin(t);}
+border C1(t=0, 2*pi) {x=x1+r1*cos(t); y=y1+r1*sin(t);}
+border CI1(t=0, 2*pi) {x=x1+rI1*cos(t); y=y1+rI1*sin(t);}
+border C2(t=0, 2*pi) {x=x2+r2*cos(t); y=y2+r2*sin(t);}
+border CI2(t=0, 2*pi) {x=x2+rI2*cos(t); y=y2+rI2*sin(t);}
+border Cd(t=0, 2*pi){x=rd*cos(t); y=rd*sin(t);}
+mesh Th=buildmesh(Cd(NsAir)
+	+C0(-NsCond)+CI0(NsDiel)
+	+C1(-NsCond)+CI1(NsDiel)
+	+C2(-NsCond)+CI2(NsDiel)
+	);
+
+// Solver
+fespace Vh(Th,P2);
+Vh<complex> u, v;
+Vh<complex> eps = eps0*(1.0+
+	+(EPS0*(1.0-1i*tand0)-1.0)*(sqrt((x-x0)^2+(y-y0)^2)<=rI0)
+	+(EPS1*(1.0-1i*tand1)-1.0)*(sqrt((x-x1)^2+(y-y1)^2)<=rI1)
+	+(EPS2*(1.0-1i*tand2)-1.0)*(sqrt((x-x2)^2+(y-y2)^2)<=rI2)
+);
+
+complex Q;
+
+// BCs Vector
+matrix<real> Vm;
+Vm.resize(NCond, 1);
+
+// For Loop
+for(int i=0; i<NCond; i++){
+	for(int j=0; j<NCond; j++){
+		for(int k=0; k<NCond; k++){if(k==i){Vm(k,0)=+0.5;}else{Vm(k,0)=-0.5;}}
+			solve V(u, v)=int2d(Th)(eps*(dx(u)*dx(v)+dy(u)*dy(v)))
+			+on(C0, u=-0.5)
+			+on(C1, u=Vm(0, 0))
+			+on(C2, u=Vm(1, 0));
+			if (j==0)
+				{Q=int1d(Th, C1)(eps*(N.x*dx(u)+N.y*dy(u)));}
+			else if (j==1)
+				{Q=int1d(Th, C2)(eps*(N.x*dx(u)+N.y*dy(u)));}
+			fileR << real(Q) << " ";
+			fileI << imag(Q) << " ";
+		}
+		fileR << endl;
+		fileI << endl;
+}
+
+exit(0);

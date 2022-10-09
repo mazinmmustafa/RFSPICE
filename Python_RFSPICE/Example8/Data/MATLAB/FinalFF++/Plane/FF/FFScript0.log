@@ -1,0 +1,234 @@
+ 
+C:\Users\mazin\Desktop\FinalFF++\Plane>ff\FFScriptR.edp
+ 
+C:\Users\mazin\Desktop\FinalFF++\Plane>-- FreeFem++ v4.6 (Fri, Apr 03, 2020  2:08:08 PM - git v4.6)
+ Load: lg_fem lg_mesh lg_mesh3 eigenvalue
+    1 : // Output File
+    2 : ofstream file("RMatrix.dat");
+    3 :
+    4 : // Constants
+    5 : real eps0= 8.85418781280000E-12;
+    6 : real mu0= 1.25663706212000E-06;
+    7 : real freq= 1.00000000000000E+09;
+    8 : int NCond=2;
+    9 :
+   10 : // Plane 0
+   11 : real W= 8.38525491562421E-02;
+   12 : real H= 5.59016994374947E-03;
+   13 : real sigma0= 5.80000000000000E+07;
+   14 :
+   15 : // Conductor 1
+   16 : real x1=-5.00000000000000E-03;
+   17 : real y1= 1.00000000000000E-02;
+ *** Warning  The identifier y1 hide a Global identifier
+ 
+   18 : real r1= 1.00000000000000E-03;
+   19 : real rI1= 2.00000000000000E-03;
+   20 : real EPS1= 4.00000000000000E+00;
+   21 : real tand1= 1.00000000000000E-03;
+   22 : real sigma1= 5.80000000000000E+07;
+   23 :
+   24 : // Conductor 2
+   25 : real x2= 5.00000000000000E-03;
+   26 : real y2= 1.00000000000000E-02;
+   27 : real r2= 1.00000000000000E-03;
+   28 : real rI2= 2.00000000000000E-03;
+   29 : real EPS2= 4.00000000000000E+00;
+   30 : real tand2= 1.00000000000000E-03;
+   31 : real sigma2= 5.80000000000000E+07;
+   32 :
+   33 : // Domain
+   34 : real rd= 5.59016994374947E-02;
+   35 :
+   36 : // Mesh Resolution
+   37 : real NsAir=50;
+   38 : real NsCond=50;
+   39 : real NsDiel=50;
+   40 :
+   41 : // Mesh
+   42 : border C01(t=-W/2.0, +W/2.0){x=t; y=-H;}
+   43 : border C02(t=-H, 0){x=W/2.0; y=t;}
+   44 : border C03(t=-W/2.0, +W/2.0){x=-t; y=0;}
+   45 : border C04(t=-H, 0){x=-W/2.0; y=t;}
+   46 : border C1(t=0, 2*pi) {x=x1+r1*cos(t); y=y1+r1*sin(t);}
+   47 : border CI1(t=0, 2*pi) {x=x1+rI1*cos(t); y=y1+rI1*sin(t);}
+   48 : border C2(t=0, 2*pi) {x=x2+r2*cos(t); y=y2+r2*sin(t);}
+   49 : border CI2(t=0, 2*pi) {x=x2+rI2*cos(t); y=y2+rI2*sin(t);}
+   50 : border Cd(t=0, 2*pi){x=rd*cos(t); y=rd*sin(t);}
+   51 : mesh Th=buildmesh(Cd(NsAir)+C01(-NsCond)+C02(-NsCond)+C03(-NsCond)+C04(-NsCond)
+   52 :         +C1(-NsCond)+CI1(NsDiel)
+   53 :         +C2(-NsCond)+CI2(NsDiel)
+   54 :         );
+   55 :
+   56 : // Solver
+   57 : // plot(Th, wait=true);
+   58 : fespace Vh(Th,P2);
+   59 : Vh<complex> u, v;
+   60 : Vh<complex> eps = eps0*(1.0+
+   61 :         +(EPS1*(1.0-1i*tand1)-1.0)*(sqrt((x-x1)^2+(y-y1)^2)<=rI1)
+   62 :         +(EPS2*(1.0-1i*tand2)-1.0)*(sqrt((x-x2)^2+(y-y2)^2)<=rI2)
+   63 : );
+   64 :
+   65 : complex Rs0=sqrt(pi*freq*mu0/sigma0);
+   66 : matrix<real> sigma;
+   67 : sigma.resize(NCond, 1);
+   68 : sigma(0, 0)=sigma1;
+   69 : sigma(1, 0)=sigma2;
+   70 : matrix<real> Rs;
+   71 : Rs.resize(NCond, 1);
+   72 : for(int k=0; k<NCond; k++){Rs(k,0)=sqrt(pi*freq*mu0/sigma(k,0));}
+   73 : complex I0, I, R;
+   74 :
+   75 : // BCs Vector
+   76 : matrix<real> Vm;
+   77 : Vm.resize(NCond, 1);
+   78 :
+   79 : // For Loop
+   80 : for(int i=0; i<NCond; i++){
+   81 :         for(int j=0; j<NCond; j++){
+   82 :                 for(int k=0; k<NCond; k++){if(k==i){Vm(k,0)=+0.5;}else{Vm(k,0)=-0.5;}}
+   83 :                         solve V(u, v)=int2d(Th)(eps*(dx(u)*dx(v)+dy(u)*dy(v)))
+   84 :                         +on(C01, u=-0.5)
+   85 :                         +on(C02, u=-0.5)
+   86 :                         +on(C03, u=-0.5)
+   87 :                         +on(C04, u=-0.5)
+   88 :                         +on(C1, u=Vm(0, 0))
+   89 :                         +on(C2, u=Vm(1, 0));
+   90 :                         I0=int1d(Th, C01)(sqrt(dx(u)*dx(u)+dy(u)*dy(u)))+
+   91 :                            int1d(Th, C02)(sqrt(dx(u)*dx(u)+dy(u)*dy(u)))+
+   92 :                            int1d(Th, C03)(sqrt(dx(u)*dx(u)+dy(u)*dy(u)))+
+   93 :                            int1d(Th, C04)(sqrt(dx(u)*dx(u)+dy(u)*dy(u)));
+   94 :                         I = 0.0;
+   95 :                         cout << Vm(0, 0) << ", " << Vm(1, 0) << endl;
+   96 :                         cout << abs(I0) << endl;
+   97 :                         if (i==0)
+   98 :                                 {I=Rs0*(int1d(Th, C01)(dx(u)*dx(u)+dy(u)*dy(u))+
+   99 :                                         int1d(Th, C02)(dx(u)*dx(u)+dy(u)*dy(u))+
+  100 :                                         int1d(Th, C03)(dx(u)*dx(u)+dy(u)*dy(u))+
+  101 :                                         int1d(Th, C04)(dx(u)*dx(u)+dy(u)*dy(u)))+
+  102 :                                 Rs(0,0)*int1d(Th, C1)(dx(u)*dx(u)+dy(u)*dy(u));
+  103 :                                 R=I/(I0*I0);}
+  104 :                         else if (i==1)
+  105 :                                 {I=Rs0*(int1d(Th, C01)(dx(u)*dx(u)+dy(u)*dy(u))+
+  106 :                                         int1d(Th, C02)(dx(u)*dx(u)+dy(u)*dy(u))+
+  107 :                                         int1d(Th, C03)(dx(u)*dx(u)+dy(u)*dy(u))+
+  108 :                                         int1d(Th, C04)(dx(u)*dx(u)+dy(u)*dy(u)))+
+  109 :                                 Rs(1,0)*int1d(Th, C2)(dx(u)*dx(u)+dy(u)*dy(u));
+  110 :                                 R=I/(I0*I0);}
+  111 :                         file << real(R) << " ";
+  112 :                 }
+  113 :                 file << endl;
+  114 : }
+  115 :
+  116 : exit(0); sizestack + 1024 =5608  ( 4584 )
+ 
+  --  mesh:  Nb of Triangles =   6948, Nb of Vertices 3548
+  -- Solve :
+          min (-0.5,-8.60616e-05)  max (0.5,4.36932e-05)
+0.5, -0.5
+0.0332894
+  -- Solve :
+          min (-0.5,-8.60616e-05)  max (0.5,4.36932e-05)
+0.5, -0.5
+0.0332894
+  -- Solve :
+          min (-0.5,-8.68827e-05)  max (0.5,4.36603e-05)
+-0.5, 0.5
+0.0159771
+  -- Solve :
+          min (-0.5,-8.68827e-05)  max (0.5,4.36603e-05)
+-0.5, 0.5
+0.0159771
+  current line = 116
+exit(0)
+ err code 0 ,  mpirank 0
+ CodeAlloc : nb ptr  4324,  size :500200 mpirank: 0
+Ok: Normal End
+ try getConsole C:\Users\mazin\Desktop\FinalFF++\Plane\ff\FFScriptR.edp
+ save log in :  'C:\Users\mazin\Desktop\FinalFF++\Plane\ff\FFScriptR.log'
+wait enter ? ff\FFScript0.edp
+ 
+C:\Users\mazin\Desktop\FinalFF++\Plane>-- FreeFem++ v4.6 (Fri, Apr 03, 2020  2:08:08 PM - git v4.6)
+ Load: lg_fem lg_mesh lg_mesh3 eigenvalue
+    1 : // Output File
+    2 : ofstream file("FF/C0Matrix.dat");
+    3 :
+    4 : // Constants
+    5 : real eps0= 8.85418781280000E-12;
+    6 : int NCond=2;
+    7 :
+    8 : // Plane 0
+    9 : real W= 8.38525491562421E-02;
+   10 : real H= 5.59016994374947E-03;
+   11 :
+   12 : // Conductor 1
+   13 : real x1=-5.00000000000000E-03;
+   14 : real y1= 1.00000000000000E-02;
+ *** Warning  The identifier y1 hide a Global identifier
+ 
+   15 : real r1= 1.00000000000000E-03;
+   16 :
+   17 : // Conductor 2
+   18 : real x2= 5.00000000000000E-03;
+   19 : real y2= 1.00000000000000E-02;
+   20 : real r2= 1.00000000000000E-03;
+   21 :
+   22 : // Domain
+   23 : real rd= 5.59016994374947E-02;
+   24 :
+   25 : // Mesh Resolution
+   26 : real NsAir=50;
+   27 : real NsCond=50;
+   28 :
+   29 : // Mesh
+   30 : border C01(t=-W/2.0, +W/2.0){x=t; y=-H;}
+   31 : border C02(t=-H, 0){x=W/2.0; y=t;}
+   32 : border C03(t=-W/2.0, +W/2.0){x=-t; y=0;}
+   33 : border C04(t=-H, 0){x=-W/2.0; y=t;}
+   34 : border C1(t=0, 2*pi) {x=x1+r1*cos(t); y=y1+r1*sin(t);}
+   35 : border C2(t=0, 2*pi) {x=x2+r2*cos(t); y=y2+r2*sin(t);}
+   36 : border Cd(t=0, 2*pi){x=rd*cos(t); y=rd*sin(t);}
+   37 : mesh Th=buildmesh(Cd(NsAir)+C01(-NsCond)+C02(-NsCond)+C03(-NsCond)+C04(-NsCond)
+   38 :         +C1(-NsCond)
+   39 :         +C2(-NsCond)
+   40 :         );
+   41 :
+   42 : // Solver
+   43 : plot(Th, wait=true);
+   44 : fespace Vh(Th,P2);
+   45 : Vh u, v;
+   46 : Vh eps = eps0;
+   47 : real Q;
+   48 :
+   49 : // BCs Vector
+   50 : matrix<real> Vm;
+   51 : Vm.resize(NCond, 1);
+   52 :
+   53 : // For Loop
+   54 : for(int i=0; i<NCond; i++){
+   55 :         for(int j=0; j<NCond; j++){
+   56 :                 for(int k=0; k<NCond; k++){if(k==j){Vm(k,0)=+0.5;}else{Vm(k,0)=-0.5;}}
+   57 :                         solve V(u, v)=int2d(Th)(eps*(dx(u)*dx(v)+dy(u)*dy(v)))
+   58 :                         +on(C01, u=-0.5)
+   59 :                         +on(C02, u=-0.5)
+   60 :                         +on(C03, u=-0.5)
+   61 :                         +on(C04, u=-0.5)
+   62 :                         +on(C1, u=Vm(0, 0))
+   63 :                         +on(C2, u=Vm(1, 0));
+   64 :                         if (i==0)
+   65 :                                 {Q=int1d(Th, C1)(eps*(N.x*dx(u)+N.y*dy(u)));}
+   66 :                         file << Q << " ";
+   67 :                 }
+   68 :                 file << endl;
+   69 : }
+   70 :
+   71 : exit(0); sizestack + 1024 =2152  ( 1128 )
+ 
+ Error opening file FF/C0Matrix.dat
+  current line = 2
+Exec error : Error opening file
+   -- number :1
+Exec error : Error opening file
+   -- number :1
+ err code 8 ,  mpirank 0
+ try getConsole C:\Users\mazin\Desktop\FinalFF++\Plane\ff\FFScript0.edp

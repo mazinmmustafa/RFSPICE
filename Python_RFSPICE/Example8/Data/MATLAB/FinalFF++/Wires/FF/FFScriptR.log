@@ -1,0 +1,125 @@
+Microsoft Windows [Version 10.0.19044.1889]
+(c) Microsoft Corporation. All rights reserved.
+ 
+C:\Users\mazin\Desktop\FinalFF++\Wires>FF\FFScriptR.edp
+ 
+C:\Users\mazin\Desktop\FinalFF++\Wires>-- FreeFem++ v4.6 (Fri, Apr 03, 2020  2:08:08 PM - git v4.6)
+ Load: lg_fem lg_mesh lg_mesh3 eigenvalue
+    1 : // Output File
+    2 : ofstream file("FF/RMatrix.dat");
+    3 :
+    4 : // Constants
+    5 : real eps0= 8.85418781280000E-12;
+    6 : real mu0= 1.25663706212000E-06;
+    7 : real freq= 1.00000000000000E+09;
+    8 : int NCond=2;
+    9 :
+   10 : // Conductor 0
+   11 : real x0= 0.00000000000000E+00;
+   12 : real y0= 0.00000000000000E+00;
+ *** Warning  The identifier y0 hide a Global identifier
+ 
+   13 : real r0= 1.00000000000000E-03;
+   14 : real rI0= 2.00000000000000E-03;
+   15 : real EPS0= 1.00000000000000E+00;
+   16 : real tand0= 1.00000000000000E-06;
+   17 : real sigma0= 5.80000000000000E+07;
+   18 :
+   19 : // Conductor 1
+   20 : real x1=-5.00000000000000E-03;
+   21 : real y1= 1.00000000000000E-02;
+ *** Warning  The identifier y1 hide a Global identifier
+ 
+   22 : real r1= 1.00000000000000E-03;
+   23 : real rI1= 2.00000000000000E-03;
+   24 : real EPS1= 1.00000000000000E+00;
+   25 : real tand1= 1.00000000000000E-06;
+   26 : real sigma1= 5.80000000000000E+07;
+   27 :
+   28 : // Conductor 2
+   29 : real x2= 5.00000000000000E-03;
+   30 : real y2= 1.00000000000000E-02;
+   31 : real r2= 1.00000000000000E-03;
+   32 : real rI2= 2.00000000000000E-03;
+   33 : real EPS2= 1.00000000000000E+00;
+   34 : real tand2= 1.00000000000000E-06;
+   35 : real sigma2= 5.80000000000000E+07;
+   36 :
+   37 : // Domain
+   38 : real rd= 5.59016994374947E-02;
+   39 :
+   40 : // Mesh Resolution
+   41 : real NsAir=50;
+   42 : real NsCond=50;
+   43 : real NsDiel=50;
+   44 :
+   45 : // Mesh
+   46 : border C0(t=0, 2*pi) {x=x0+r0*cos(t); y=y0+r0*sin(t);}
+   47 : border CI0(t=0, 2*pi) {x=x0+rI0*cos(t); y=y0+rI0*sin(t);}
+   48 : border C1(t=0, 2*pi) {x=x1+r1*cos(t); y=y1+r1*sin(t);}
+   49 : border CI1(t=0, 2*pi) {x=x1+rI1*cos(t); y=y1+rI1*sin(t);}
+   50 : border C2(t=0, 2*pi) {x=x2+r2*cos(t); y=y2+r2*sin(t);}
+   51 : border CI2(t=0, 2*pi) {x=x2+rI2*cos(t); y=y2+rI2*sin(t);}
+   52 : border Cd(t=0, 2*pi){x=rd*cos(t); y=rd*sin(t);}
+   53 : mesh Th=buildmesh(Cd(NsAir)
+   54 :         +C0(-NsCond)+CI0(NsDiel)
+   55 :         +C1(-NsCond)+CI1(NsDiel)
+   56 :         +C2(-NsCond)+CI2(NsDiel)
+   57 :         );
+   58 :
+   59 : // Solver
+   60 : fespace Vh(Th,P2);
+   61 : Vh<complex> u, v;
+   62 : Vh<complex> eps = eps0*(1.0+
+   63 :         +(EPS0*(1.0-1i*tand0)-1.0)*(sqrt((x-x0)^2+(y-y0)^2)<=rI0)
+   64 :         +(EPS1*(1.0-1i*tand1)-1.0)*(sqrt((x-x1)^2+(y-y1)^2)<=rI1)
+   65 :         +(EPS2*(1.0-1i*tand2)-1.0)*(sqrt((x-x2)^2+(y-y2)^2)<=rI2)
+   66 : );
+   67 :
+   68 : complex Rs0=sqrt(pi*freq*mu0/sigma0);
+   69 : matrix<real> sigma;
+   70 : sigma.resize(NCond, 1);
+   71 : sigma(0, 0)=sigma1;
+   72 : sigma(1, 0)=sigma2;
+   73 : matrix<real> Rs;
+   74 : Rs.resize(NCond, 1);
+   75 : for(int k=0; k<NCond; k++){Rs(k,0)=sqrt(pi*freq*mu0/sigma(k,0));}
+   76 : complex I0, I, R;
+   77 :
+   78 : // BCs Vector
+   79 : matrix<real> Vm;
+   80 : Vm.resize(NCond, 1);
+   81 :
+   82 : // For Loop
+   83 : for(int i=0; i<NCond; i++){
+   84 :         for(int j=0; j<NCond; j++){
+   85 :                 for(int k=0; k<NCond; k++){if(k==j){Vm(k,0)=+0.5;}else{Vm(k,0)=-0.5;}}
+   86 :                         solve V(u, v)=int2d(Th)(eps*(dx(u)*dx(v)+dy(u)*dy(v)))
+   87 :                         +on(C0, u=-0.5)
+   88 :                         +on(C1, u=Vm(0, 0))
+   89 :                         +on(C2, u=Vm(1, 0));
+   90 :                         I0=int1d(Th, C0)(sqrt(dx(u)*dx(u)+dy(u)*dy(u)));
+   91 :                         I = 0.0;
+   92 :                         if (i==0)
+   93 :                                 {I=Rs0*int1d(Th, C0)(dx(u)*dx(u)+dy(u)*dy(u))+
+   94 :                                 Rs(0,0)*int1d(Th, C1)(dx(u)*dx(u)+dy(u)*dy(u));
+   95 :                                 R=I/(I0*I0);}
+   96 :                         else if (i==1)
+   97 :                                 {I=Rs0*int1d(Th, C0)(dx(u)*dx(u)+dy(u)*dy(u))+
+   98 :                                 Rs(1,0)*int1d(Th, C2)(dx(u)*dx(u)+dy(u)*dy(u));
+   99 :                                 R=I/(I0*I0);}
+  100 :                         file << real(R) << " ";
+  101 :                 }
+  102 :                 file << endl;
+  103 : }
+  104 :
+  105 : exit(0); sizestack + 1024 =7768  ( 6744 )
+ 
+ Error opening file FF/RMatrix.dat
+  current line = 2
+Exec error : Error opening file
+   -- number :1
+Exec error : Error opening file
+   -- number :1
+ err code 8 ,  mpirank 0
+ try getConsole C:\Users\mazin\Desktop\FinalFF++\Wires\FF\FFScriptR.edp

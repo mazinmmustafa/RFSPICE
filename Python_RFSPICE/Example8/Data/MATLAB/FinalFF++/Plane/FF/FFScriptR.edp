@@ -1,0 +1,112 @@
+// Output File
+ofstream file("FF/RMatrix.dat");
+
+// Constants
+real eps0= 8.85418781280000E-12;
+real mu0= 1.25663706212000E-06;
+real freq= 1.00000000000000E+09;
+int NCond=2;
+
+// Plane 0
+real W= 9.01812687036504E-02;
+real H= 5.01007048353613E-03;
+real sigma0= 5.80000000000000E+07;
+
+// Conductor 1
+real x1=-6.35000000000000E-04;
+real y1= 1.00000000000000E-02;
+real r1= 1.90500000000000E-04;
+real rI1= 2.28600000000000E-04;
+real EPS1= 1.00000000000000E+00;
+real tand1= 0.00000000000000E+00;
+real sigma1= 5.80000000000000E+07;
+
+// Conductor 2
+real x2= 6.35000000000000E-04;
+real y2= 1.00000000000000E-02;
+real r2= 1.90500000000000E-04;
+real rI2= 2.28600000000000E-04;
+real EPS2= 1.00000000000000E+00;
+real tand2= 0.00000000000000E+00;
+real sigma2= 5.80000000000000E+07;
+
+// Domain
+real rd= 5.01007048353613E-02;
+
+// Mesh Resolution
+real NsAir=200;
+real NsCond=200;
+real NsDiel=200;
+
+// Mesh
+border C01(t=-W/2.0, +W/2.0){x=t; y=-H;}
+border C02(t=-H, 0){x=W/2.0; y=t;}
+border C03(t=-W/2.0, +W/2.0){x=-t; y=0;}
+border C04(t=0, H){x=-W/2.0; y=-t;}
+border C1(t=0, 2*pi) {x=x1+r1*cos(t); y=y1+r1*sin(t);}
+border CI1(t=0, 2*pi) {x=x1+rI1*cos(t); y=y1+rI1*sin(t);}
+border C2(t=0, 2*pi) {x=x2+r2*cos(t); y=y2+r2*sin(t);}
+border CI2(t=0, 2*pi) {x=x2+rI2*cos(t); y=y2+rI2*sin(t);}
+border Cd(t=0, 2*pi){x=rd*cos(t); y=rd*sin(t);}
+mesh Th=buildmesh(Cd(NsAir)+C01(-NsCond)+C02(-NsCond)+C03(-NsCond)+C04(-NsCond)
+	+C1(-NsCond)+CI1(NsDiel)
+	+C2(-NsCond)+CI2(NsDiel)
+	);
+
+// Solver
+fespace Vh(Th,P2);
+Vh<complex> u, v;
+Vh<complex> eps = eps0*(1.0+
+	+(EPS1*(1.0-1i*tand1)-1.0)*(sqrt((x-x1)^2+(y-y1)^2)<=rI1)
+	+(EPS2*(1.0-1i*tand2)-1.0)*(sqrt((x-x2)^2+(y-y2)^2)<=rI2)
+);
+
+complex Rs0=sqrt(pi*freq*mu0/sigma0);
+matrix<real> sigma;
+sigma.resize(NCond, 1);
+sigma(0, 0)=sigma1;
+sigma(1, 0)=sigma2;
+matrix<real> Rs;
+Rs.resize(NCond, 1);
+for(int k=0; k<NCond; k++){Rs(k,0)=sqrt(pi*freq*mu0/sigma(k,0));}
+complex I0, I, R;
+
+// BCs Vector
+matrix<real> Vm;
+Vm.resize(NCond, 1);
+
+// For Loop
+for(int i=0; i<NCond; i++){
+	for(int j=0; j<NCond; j++){
+		for(int k=0; k<NCond; k++){if(k==i){Vm(k,0)=+0.5;}else{Vm(k,0)=-0.5;}}
+			solve V(u, v)=int2d(Th)(eps*(dx(u)*dx(v)+dy(u)*dy(v)))
+			+on(C01, u=-0.5)
+			+on(C02, u=-0.5)
+			+on(C03, u=-0.5)
+			+on(C04, u=-0.5)
+			+on(C1, u=Vm(0, 0))
+			+on(C2, u=Vm(1, 0));
+			I0=int1d(Th, C01)(sqrt(abs(dx(u)*dx(u)+dy(u)*dy(u))))+
+			   int1d(Th, C02)(sqrt(abs(dx(u)*dx(u)+dy(u)*dy(u))))+
+			   int1d(Th, C03)(sqrt(abs(dx(u)*dx(u)+dy(u)*dy(u))))+
+			   int1d(Th, C04)(sqrt(abs(dx(u)*dx(u)+dy(u)*dy(u))));
+			if (j==0)
+				{I=Rs0*(int1d(Th, C01)(abs(dx(u)*dx(u)+dy(u)*dy(u)))+
+				        int1d(Th, C02)(abs(dx(u)*dx(u)+dy(u)*dy(u)))+
+				        int1d(Th, C03)(abs(dx(u)*dx(u)+dy(u)*dy(u)))+
+				        int1d(Th, C04)(abs(dx(u)*dx(u)+dy(u)*dy(u))))+
+				Rs(0,0)*int1d(Th, C1)(abs(dx(u)*dx(u)+dy(u)*dy(u)));
+				R=I/(I0*I0);}
+			else if (j==1)
+				{I=Rs0*(int1d(Th, C01)(abs(dx(u)*dx(u)+dy(u)*dy(u)))+
+				        int1d(Th, C02)(abs(dx(u)*dx(u)+dy(u)*dy(u)))+
+				        int1d(Th, C03)(abs(dx(u)*dx(u)+dy(u)*dy(u)))+
+				        int1d(Th, C04)(abs(dx(u)*dx(u)+dy(u)*dy(u))))+
+				Rs(1,0)*int1d(Th, C2)(abs(dx(u)*dx(u)+dy(u)*dy(u)));
+				R=I/(I0*I0);}
+			file << real(R) << " ";
+		}
+		file << endl;
+}
+
+exit(0);

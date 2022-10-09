@@ -1,0 +1,83 @@
+-- FreeFem++ v4.6 (Fri, Apr 03, 2020  2:08:08 PM - git v4.6)
+ Load: lg_fem lg_mesh lg_mesh3 eigenvalue
+    1 : // Output File
+    2 : ofstream file("FF/C0Matrix.dat");
+    3 :
+    4 : // Constants
+    5 : real eps0= 8.85418781280000E-12;
+    6 : int NCond=2;
+    7 :
+    8 : // Conductor 0
+    9 : real x0= 0.00000000000000E+00;
+   10 : real y0= 0.00000000000000E+00;
+ *** Warning  The identifier y0 hide a Global identifier
+ 
+   11 : real r0= 1.00000000000000E-03;
+   12 :
+   13 : // Conductor 1
+   14 : real x1=-5.00000000000000E-03;
+   15 : real y1= 1.00000000000000E-02;
+ *** Warning  The identifier y1 hide a Global identifier
+ 
+   16 : real r1= 1.00000000000000E-03;
+   17 :
+   18 : // Conductor 2
+   19 : real x2= 5.00000000000000E-03;
+   20 : real y2= 1.00000000000000E-02;
+   21 : real r2= 1.00000000000000E-03;
+   22 :
+   23 : // Domain
+   24 : real rd= 5.59016994374947E-02;
+   25 :
+   26 : // Mesh Resolution
+   27 : real NsAir=50;
+   28 : real NsCond=50;
+   29 :
+   30 : // Mesh
+   31 : border C0(t=0, 2*pi) {x=x0+r0*cos(t); y=y0+r0*sin(t);}
+   32 : border C1(t=0, 2*pi) {x=x1+r1*cos(t); y=y1+r1*sin(t);}
+   33 : border C2(t=0, 2*pi) {x=x2+r2*cos(t); y=y2+r2*sin(t);}
+   34 : border Cd(t=0, 2*pi){x=rd*cos(t); y=rd*sin(t);}
+   35 : mesh Th=buildmesh(Cd(NsAir)
+   36 :         +C0(-NsCond)
+   37 :         +C1(-NsCond)
+   38 :         +C2(-NsCond)
+   39 :         );
+   40 :
+   41 : // Solver
+   42 : fespace Vh(Th,P2);
+   43 : Vh u, v;
+   44 : Vh eps = eps0;
+   45 : real Q;
+   46 :
+   47 : // BCs Vector
+   48 : matrix<real> Vm;
+   49 : Vm.resize(NCond, 1);
+   50 :
+   51 : // For Loop
+   52 : for(int i=0; i<NCond; i++){
+   53 :         for(int j=0; j<NCond; j++){
+   54 :                 for(int k=0; k<NCond; k++){if(k==j){Vm(k,0)=+0.5;}else{Vm(k,0)=-0.5;}}
+   55 :                         solve V(u, v)=int2d(Th)(eps*(dx(u)*dx(v)+dy(u)*dy(v)))
+   56 :                         +on(C0, u=-0.5)
+   57 :                         +on(C1, u=Vm(0, 0))
+   58 :                         +on(C2, u=Vm(1, 0));
+   59 :                         if (i==0)
+   60 :                                 {Q=int1d(Th, C1)(eps*(N.x*dx(u)+N.y*dy(u)));}
+   61 :                         else if (i==1)
+   62 :                                 {Q=int1d(Th, C2)(eps*(N.x*dx(u)+N.y*dy(u)));}
+   63 :                         file << Q << " ";
+   64 :                 }
+   65 :                 file << endl;
+   66 : }
+   67 :
+   68 : exit(0); sizestack + 1024 =2112  ( 1088 )
+ 
+ Error opening file FF/C0Matrix.dat
+  current line = 2
+Exec error : Error opening file
+   -- number :1
+Exec error : Error opening file
+   -- number :1
+ err code 8 ,  mpirank 0
+ try getConsole C:\Users\mazin\Desktop\FinalFF++\Wires\FF\FFScript0.edp

@@ -1,0 +1,11 @@
+Network 1: consist of 1 Devices
+
+Device 1:
+Node a1 in Port 1 from Device 1 is connected to: 
+Node b1 in Port 1 from Device 1 is connected to: a1 from Device 1 ((0.11+0j)), a2 from Device 1 ((0.12+0j)), 
+Node a2 in Port 2 from Device 1 is connected to: 
+Node b2 in Port 2 from Device 1 is connected to: a1 from Device 1 ((0.21+0j)), a2 from Device 1 ((0.22+0j)), 
+
+Port 1 from Device 1 is Excitation Port 1 (globally)
+Port 2 from Device 1 is Excitation Port 2 (globally)
+
