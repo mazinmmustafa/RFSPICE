@@ -198,7 +198,7 @@ void testNetwork4(){
 		addExcitation(&network1, 1, 1, 1);
 		addExcitation(&network1, 2, 3, 2);
 		
-		// logNetwork(network1);
+		logNetwork(network1);
 		
 		solveNetwork(&network1);
 		
@@ -359,7 +359,7 @@ void testNetwork5(){
 		addExcitation(&network1, 1, 1, 1);
 		addExcitation(&network1, 3, 4, 2);
 		
-		// logNetwork(network1);
+		logNetwork(network1);
 		
 		solveNetwork(&network1);
 		

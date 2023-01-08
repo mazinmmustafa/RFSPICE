@@ -81,7 +81,6 @@ void getSMatrixSplice(int N, Matrix *S_Matrix){
 //
 
 int global_index_counter=1;
-
 void logNetwork(Network network){
 	FILE *file=fopen("log.txt", "w");
 	assert(file!=NULL);
@@ -295,6 +294,8 @@ struct DataList{
 };
 
 void solveNetwork(Network *network){
+	global_index_counter = 1;
+	global_network_index_counter = 0;
 	// Checking
 	int count=0;
 	int count_all=0;
