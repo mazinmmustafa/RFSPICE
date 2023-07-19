@@ -67,7 +67,7 @@ void connectPorts(Network *network, int port_s_index,
 void addExcitation(Network *network, int device_index, 
 	int port_index, int port_global_index);
 void solveNetwork(Network *network);
-void deleteNetwork(Network network);
+void deleteNetwork(Network *network);
 //
 void getSMatrixTL(double Z0, complex double Zc, 
 	double L, double vp, double alpha, double freq, 

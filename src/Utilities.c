@@ -47,6 +47,7 @@ void progressBar(int n, int N){
 	if (n==N){
 		printf(" Done!\n");
 	}
+	fflush(stdout);
 }
 
 double deg2rad(double theta){

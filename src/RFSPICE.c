@@ -145,18 +145,23 @@ Network createNetwork(int network_index, int n_devices){
 	return newNetwork;
 }
 
-void deleteNetwork(Network network){
-	for (int i=0; i<network.n_devices; i++){
-		for (int j=0; j<network.devices[i].n_ports; j++){
-			free(network.devices[i].ports[j].nodes);
-			network.devices[i].ports[j].nodes = NULL;
+void deleteNetwork(Network *network){
+	for (int i=0; i<network->n_devices; i++){
+		for (int j=0; j<network->devices[i].n_ports; j++){
+			free(network->devices[i].ports[j].nodes[0].inputs);
+			free(network->devices[i].ports[j].nodes[1].inputs);
 		}
-		free(network.devices[i].ports);
-		network.devices[i].ports = NULL;
+		for (int j=0; j<network->devices[i].n_ports; j++){
+			free(network->devices[i].ports[j].nodes);
+			network->devices[i].ports[j].nodes = NULL;
+		}
+		free(network->devices[i].ports);
+		network->devices[i].ports = NULL;
 	}
-	free(network.devices);
-	network.devices = NULL;
-	deallocateMatrix(&network.S_Matrix);
+	free(network->devices);
+	network->devices = NULL;
+	free(network->isDeviceSet);
+	deallocateMatrix(&network->S_Matrix);
 }
 
 Device createDevice(int network_index, int device_index, 

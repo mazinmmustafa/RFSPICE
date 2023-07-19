@@ -6,23 +6,273 @@ Device 1:
 
 Port 1: Global Index 1 (Excitation Port 1)
 Node a1: Global Index a1, inputs from 0 nodes
-Node b1: Global Index b1, inputs from 2 nodes
-Connected to a1 with weight (1.10000000000000E-001, 0.00000000000000E+000)
-Connected to a2 with weight (1.20000000000000E-001, 0.00000000000000E+000)
+Node b1: Global Index b1, inputs from 8 nodes
+Connected to a1 with weight ( 7.53364559152124E-01, -2.03637842311715E-01)
+Connected to a2 with weight ( 1.69337915034728E-01,  4.02028275076554E-02)
+Connected to a3 with weight ( 2.68322830149792E-02,  4.51697866070275E-02)
+Connected to a4 with weight ( 1.31282713456504E-02,  2.76997633874636E-02)
+Connected to a5 with weight (-1.83545151426988E-01, -5.13623066949486E-01)
+Connected to a6 with weight ( 1.18462964067377E-01,  1.85889933429322E-01)
+Connected to a7 with weight ( 2.55978416904559E-02,  8.51964830378770E-02)
+Connected to a8 with weight ( 1.08972603112414E-02,  5.34892363385392E-02)
 Port 2: Global Index 2
 Node a2: Global Index a2, inputs from 1 nodes
-Connected to b3 with weight (1.00000000000000E+000, 0.00000000000000E+000)
-Node b2: Global Index b2, inputs from 2 nodes
-Connected to a1 with weight (2.10000000000000E-001, 0.00000000000000E+000)
-Connected to a2 with weight (2.20000000000000E-001, 0.00000000000000E+000)
+Connected to b17 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+Node b2: Global Index b2, inputs from 8 nodes
+Connected to a1 with weight ( 1.69352208646230E-01,  4.02106465193218E-02)
+Connected to a2 with weight ( 6.58628334282900E-01, -1.91121882857175E-01)
+Connected to a3 with weight ( 1.47846636040057E-01,  3.24641882400077E-02)
+Connected to a4 with weight ( 2.67921171117717E-02,  4.51211769699648E-02)
+Connected to a5 with weight ( 1.18407821093444E-01,  1.85913184142953E-01)
+Connected to a6 with weight (-2.43727805851510E-01, -5.66977558274191E-01)
+Connected to a7 with weight ( 1.00368238567786E-01,  1.62137250778863E-01)
+Connected to a8 with weight ( 2.55495948620797E-02,  8.51842632866696E-02)
+Port 3: Global Index 3
+Node a3: Global Index a3, inputs from 1 nodes
+Connected to b18 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+Node b3: Global Index b3, inputs from 8 nodes
+Connected to a1 with weight ( 2.68079515326060E-02,  4.51348889941553E-02)
+Connected to a2 with weight ( 1.47839180606263E-01,  3.24483712142446E-02)
+Connected to a3 with weight ( 6.58608858962986E-01, -1.91144611176615E-01)
+Connected to a4 with weight ( 1.69338063763196E-01,  4.01992372170458E-02)
+Connected to a5 with weight ( 2.55632742554724E-02,  8.51831521948754E-02)
+Connected to a6 with weight ( 1.00346284971306E-01,  1.62134949630748E-01)
+Connected to a7 with weight (-2.43776893877168E-01, -5.66974159271305E-01)
+Connected to a8 with weight ( 1.18358439300791E-01,  1.85923325379213E-01)
+Port 4: Global Index 4
+Node a4: Global Index a4, inputs from 1 nodes
+Connected to b19 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+Node b4: Global Index b4, inputs from 8 nodes
+Connected to a1 with weight ( 1.31332013756850E-02,  2.77111527129768E-02)
+Connected to a2 with weight ( 2.68149724899651E-02,  4.51575186251176E-02)
+Connected to a3 with weight ( 1.69346057645346E-01,  4.02268815955400E-02)
+Connected to a4 with weight ( 7.53419991822866E-01, -2.03553452242490E-01)
+Connected to a5 with weight ( 1.09041789552422E-02,  5.34963327129325E-02)
+Connected to a6 with weight ( 2.55867554281580E-02,  8.51989333058502E-02)
+Connected to a7 with weight ( 1.18491664544397E-01,  1.85899737945125E-01)
+Connected to a8 with weight (-1.83453857606450E-01, -5.13605372508100E-01)
+Port 5: Global Index 5
+Node a5: Global Index a5, inputs from 1 nodes
+Connected to b20 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+Node b5: Global Index b5, inputs from 8 nodes
+Connected to a1 with weight (-1.83545151426988E-01, -5.13623066949486E-01)
+Connected to a2 with weight ( 1.18462964067377E-01,  1.85889933429322E-01)
+Connected to a3 with weight ( 2.55978416904559E-02,  8.51964830378770E-02)
+Connected to a4 with weight ( 1.08972603112414E-02,  5.34892363385392E-02)
+Connected to a5 with weight ( 7.53364559152124E-01, -2.03637842311715E-01)
+Connected to a6 with weight ( 1.69337915034728E-01,  4.02028275076554E-02)
+Connected to a7 with weight ( 2.68322830149792E-02,  4.51697866070275E-02)
+Connected to a8 with weight ( 1.31282713456504E-02,  2.76997633874636E-02)
+Port 6: Global Index 6
+Node a6: Global Index a6, inputs from 1 nodes
+Connected to b22 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+Node b6: Global Index b6, inputs from 8 nodes
+Connected to a1 with weight ( 1.18407821093444E-01,  1.85913184142953E-01)
+Connected to a2 with weight (-2.43727805851510E-01, -5.66977558274191E-01)
+Connected to a3 with weight ( 1.00368238567786E-01,  1.62137250778863E-01)
+Connected to a4 with weight ( 2.55495948620797E-02,  8.51842632866696E-02)
+Connected to a5 with weight ( 1.69352208646230E-01,  4.02106465193218E-02)
+Connected to a6 with weight ( 6.58628334282900E-01, -1.91121882857175E-01)
+Connected to a7 with weight ( 1.47846636040057E-01,  3.24641882400077E-02)
+Connected to a8 with weight ( 2.67921171117717E-02,  4.51211769699648E-02)
+Port 7: Global Index 7
+Node a7: Global Index a7, inputs from 1 nodes
+Connected to b23 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+Node b7: Global Index b7, inputs from 8 nodes
+Connected to a1 with weight ( 2.55632742554724E-02,  8.51831521948754E-02)
+Connected to a2 with weight ( 1.00346284971306E-01,  1.62134949630748E-01)
+Connected to a3 with weight (-2.43776893877168E-01, -5.66974159271305E-01)
+Connected to a4 with weight ( 1.18358439300791E-01,  1.85923325379213E-01)
+Connected to a5 with weight ( 2.68079515326060E-02,  4.51348889941553E-02)
+Connected to a6 with weight ( 1.47839180606263E-01,  3.24483712142446E-02)
+Connected to a7 with weight ( 6.58608858962986E-01, -1.91144611176615E-01)
+Connected to a8 with weight ( 1.69338063763196E-01,  4.01992372170458E-02)
+Port 8: Global Index 8
+Node a8: Global Index a8, inputs from 1 nodes
+Connected to b14 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+Node b8: Global Index b8, inputs from 8 nodes
+Connected to a1 with weight ( 1.09041789552422E-02,  5.34963327129325E-02)
+Connected to a2 with weight ( 2.55867554281580E-02,  8.51989333058502E-02)
+Connected to a3 with weight ( 1.18491664544397E-01,  1.85899737945125E-01)
+Connected to a4 with weight (-1.83453857606450E-01, -5.13605372508100E-01)
+Connected to a5 with weight ( 1.31332013756850E-02,  2.77111527129768E-02)
+Connected to a6 with weight ( 2.68149724899651E-02,  4.51575186251176E-02)
+Connected to a7 with weight ( 1.69346057645346E-01,  4.02268815955400E-02)
+Connected to a8 with weight ( 7.53419991822866E-01, -2.03553452242490E-01)
 
 ------------------------
 Device 2:
 
-Port 1: Global Index 3
-Node a1: Global Index a3, inputs from 1 nodes
-Connected to b2 with weight (1.00000000000000E+000, 0.00000000000000E+000)
-Node b1: Global Index b3, inputs from 1 nodes
-Connected to a3 with weight (-1.00000000000000E+000, 0.00000000000000E+000)
+Port 1: Global Index 9
+Node a1: Global Index a9, inputs from 1 nodes
+Connected to b21 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+Node b1: Global Index b9, inputs from 4 nodes
+Connected to a9 with weight ( 7.65193161223251E-01,  1.79034442067615E-01)
+Connected to a10 with weight ( 1.96136525951092E-01, -6.03466591447848E-02)
+Connected to a11 with weight (-1.67733124124693E-01,  4.85906095039495E-01)
+Connected to a12 with weight ( 1.37305016235264E-01, -2.39230421184041E-01)
+Port 2: Global Index 10
+Node a2: Global Index a10, inputs from 1 nodes
+Connected to b25 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+Node b2: Global Index b10, inputs from 4 nodes
+Connected to a9 with weight ( 1.96122987409251E-01, -6.03218108208738E-02)
+Connected to a10 with weight ( 7.65179622681410E-01,  1.79059290391527E-01)
+Connected to a11 with weight ( 1.37270788695373E-01, -2.39226911318937E-01)
+Connected to a12 with weight (-1.67767351664585E-01,  4.85909604904599E-01)
+Port 3: Global Index 11
+Node a3: Global Index a11, inputs from 1 nodes
+Connected to b26 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+Node b3: Global Index b11, inputs from 4 nodes
+Connected to a9 with weight (-1.67733124124693E-01,  4.85906095039495E-01)
+Connected to a10 with weight ( 1.37305016235264E-01, -2.39230421184041E-01)
+Connected to a11 with weight ( 7.65193161223251E-01,  1.79034442067615E-01)
+Connected to a12 with weight ( 1.96136525951092E-01, -6.03466591447848E-02)
+Port 4: Global Index 12
+Node a4: Global Index a12, inputs from 1 nodes
+Connected to b27 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+Node b4: Global Index b12, inputs from 4 nodes
+Connected to a9 with weight ( 1.37270788695373E-01, -2.39226911318937E-01)
+Connected to a10 with weight (-1.67767351664585E-01,  4.85909604904599E-01)
+Connected to a11 with weight ( 1.96122987409251E-01, -6.03218108208738E-02)
+Connected to a12 with weight ( 7.65179622681410E-01,  1.79059290391527E-01)
+
+------------------------
+Device 3:
+
+Port 1: Global Index 13
+Node a1: Global Index a13, inputs from 1 nodes
+Connected to b24 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+Node b1: Global Index b13, inputs from 4 nodes
+Connected to a13 with weight ( 7.65193161223251E-01,  1.79034442067615E-01)
+Connected to a14 with weight ( 1.96136525951092E-01, -6.03466591447848E-02)
+Connected to a15 with weight (-1.67733124124693E-01,  4.85906095039495E-01)
+Connected to a16 with weight ( 1.37305016235264E-01, -2.39230421184041E-01)
+Port 2: Global Index 14
+Node a2: Global Index a14, inputs from 1 nodes
+Connected to b8 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+Node b2: Global Index b14, inputs from 4 nodes
+Connected to a13 with weight ( 1.96122987409251E-01, -6.03218108208738E-02)
+Connected to a14 with weight ( 7.65179622681410E-01,  1.79059290391527E-01)
+Connected to a15 with weight ( 1.37270788695373E-01, -2.39226911318937E-01)
+Connected to a16 with weight (-1.67767351664585E-01,  4.85909604904599E-01)
+Port 3: Global Index 15
+Node a3: Global Index a15, inputs from 1 nodes
+Connected to b28 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+Node b3: Global Index b15, inputs from 4 nodes
+Connected to a13 with weight (-1.67733124124693E-01,  4.85906095039495E-01)
+Connected to a14 with weight ( 1.37305016235264E-01, -2.39230421184041E-01)
+Connected to a15 with weight ( 7.65193161223251E-01,  1.79034442067615E-01)
+Connected to a16 with weight ( 1.96136525951092E-01, -6.03466591447848E-02)
+Port 4: Global Index 16 (Excitation Port 2)
+Node a4: Global Index a16, inputs from 0 nodes
+Node b4: Global Index b16, inputs from 4 nodes
+Connected to a13 with weight ( 1.37270788695373E-01, -2.39226911318937E-01)
+Connected to a14 with weight (-1.67767351664585E-01,  4.85909604904599E-01)
+Connected to a15 with weight ( 1.96122987409251E-01, -6.03218108208738E-02)
+Connected to a16 with weight ( 7.65179622681410E-01,  1.79059290391527E-01)
+
+------------------------
+Device 4:
+
+Port 1: Global Index 17
+Node a1: Global Index a17, inputs from 1 nodes
+Connected to b2 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+Node b1: Global Index b17, inputs from 1 nodes
+Connected to a17 with weight ( 9.04761904761905E-01,  0.00000000000000E+00)
+
+------------------------
+Device 5:
+
+Port 1: Global Index 18
+Node a1: Global Index a18, inputs from 1 nodes
+Connected to b3 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+Node b1: Global Index b18, inputs from 1 nodes
+Connected to a18 with weight ( 8.18181818181818E-01,  0.00000000000000E+00)
+
+------------------------
+Device 6:
+
+Port 1: Global Index 19
+Node a1: Global Index a19, inputs from 1 nodes
+Connected to b4 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+Node b1: Global Index b19, inputs from 1 nodes
+Connected to a19 with weight (-6.66666666666667E-01,  0.00000000000000E+00)
+
+------------------------
+Device 7:
+
+Port 1: Global Index 20
+Node a1: Global Index a20, inputs from 1 nodes
+Connected to b5 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+Node b1: Global Index b20, inputs from 2 nodes
+Connected to a20 with weight ( 5.00000000000000E-01,  0.00000000000000E+00)
+Connected to a21 with weight ( 5.00000000000000E-01,  0.00000000000000E+00)
+Port 2: Global Index 21
+Node a2: Global Index a21, inputs from 1 nodes
+Connected to b9 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+Node b2: Global Index b21, inputs from 2 nodes
+Connected to a20 with weight ( 5.00000000000000E-01,  0.00000000000000E+00)
+Connected to a21 with weight ( 5.00000000000000E-01,  0.00000000000000E+00)
+
+------------------------
+Device 8:
+
+Port 1: Global Index 22
+Node a1: Global Index a22, inputs from 1 nodes
+Connected to b6 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+Node b1: Global Index b22, inputs from 1 nodes
+Connected to a22 with weight (-1.00000000000000E+00,  0.00000000000000E+00)
+
+------------------------
+Device 9:
+
+Port 1: Global Index 23
+Node a1: Global Index a23, inputs from 1 nodes
+Connected to b7 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+Node b1: Global Index b23, inputs from 2 nodes
+Connected to a23 with weight (-3.33333333333333E-01,  0.00000000000000E+00)
+Connected to a24 with weight ( 6.66666666666667E-01,  0.00000000000000E+00)
+Port 2: Global Index 24
+Node a2: Global Index a24, inputs from 1 nodes
+Connected to b13 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+Node b2: Global Index b24, inputs from 2 nodes
+Connected to a23 with weight ( 6.66666666666667E-01,  0.00000000000000E+00)
+Connected to a24 with weight (-3.33333333333333E-01,  0.00000000000000E+00)
+
+------------------------
+Device 10:
+
+Port 1: Global Index 25
+Node a1: Global Index a25, inputs from 1 nodes
+Connected to b10 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+Node b1: Global Index b25, inputs from 1 nodes
+Connected to a25 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+
+------------------------
+Device 11:
+
+Port 1: Global Index 26
+Node a1: Global Index a26, inputs from 1 nodes
+Connected to b11 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+Node b1: Global Index b26, inputs from 1 nodes
+Connected to a26 with weight ( 9.80198019801980E-01,  0.00000000000000E+00)
+
+------------------------
+Device 12:
+
+Port 1: Global Index 27
+Node a1: Global Index a27, inputs from 1 nodes
+Connected to b12 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+Node b1: Global Index b27, inputs from 1 nodes
+Connected to a27 with weight ( 0.00000000000000E+00,  0.00000000000000E+00)
+
+------------------------
+Device 13:
+
+Port 1: Global Index 28
+Node a1: Global Index a28, inputs from 1 nodes
+Connected to b15 with weight ( 1.00000000000000E+00,  0.00000000000000E+00)
+Node b1: Global Index b28, inputs from 1 nodes
+Connected to a28 with weight (-6.66666666666667E-01,  0.00000000000000E+00)
 
 =================================================

@@ -36,6 +36,8 @@ set(gca,'XScale','log','YScale','log')
 pbaspect([2 1 1])
 xlim([1E6 0.5E9])
 ylim([1E-3 1E0])
+grid on
+grid minor
 %%
 exportgraphics(gcf,'Figure1.pdf','ContentType','vector');
 %%
@@ -50,6 +52,8 @@ set(gca,'XScale','log')
 pbaspect([2 1 1])
 xlim([1E6 0.5E9])
 ylim([-1 +1]*200)
+grid on
+grid minor
 %%
 exportgraphics(gcf,'Figure2.pdf','ContentType','vector');
 %%

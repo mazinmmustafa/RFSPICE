@@ -40,7 +40,7 @@ void testNetwork1(){
 	deallocateMatrix(&SM1);
 	deallocateMatrix(&SM2);
 	
-	deleteNetwork(N1);
+	deleteNetwork(&N1);
 }
 
 void testNetwork2(){
@@ -109,7 +109,7 @@ void testNetwork2(){
 	deallocateMatrix(&SM3);
 	deallocateMatrix(&SM4);
 	
-	deleteNetwork(N1);
+	deleteNetwork(&N1);
 }
 
 void testNetwork3(){
@@ -147,7 +147,7 @@ void testNetwork3(){
 	deallocateMatrix(&SM1);
 	deallocateMatrix(&SM2);
 	
-	deleteNetwork(N1);
+	deleteNetwork(&N1);
 }
 
 void testNetwork4(){
@@ -171,6 +171,9 @@ void testNetwork4(){
 	allocateMatrix(&SM3, 2, 2);
 	allocateMatrix(&SM4, 1, 1);
 	
+	Timer T;
+	ticTimer(&T);
+
 	for (int i=0; i<Ns; i++){
 		freq = freq_min+i*dfreq;
 		
@@ -211,11 +214,15 @@ void testNetwork4(){
 			}
 		}
 		fprintf(file, "\n");
-		deleteNetwork(network1);
+		deleteNetwork(&network1);
+
+		progressBar(i, Ns);
 		
 	}
 	fclose(file);
 	
+	tocTimer(&T);
+
 	deallocateMatrix(&SM1);
 	deallocateMatrix(&SM2);
 	deallocateMatrix(&SM3);
@@ -274,33 +281,34 @@ void testNetwork5(){
 	ticTimer(&T);
 	
 	for (int i=0; i<Ns; i++){
-		fscanf(file1, "%lf", &freq);
+
+		assert(fscanf(file1, "%lf", &freq));
 		for (int ii=0; ii<8; ii++){
 			for (int jj=0; jj<8; jj++){
-				fscanf(file1, "%lf", &tempR);
-				fscanf(file1, "%lf", &tempI);
+				assert(fscanf(file1, "%lf", &tempR));
+				assert(fscanf(file1, "%lf", &tempI));
 				SM1.data[ii][jj] = tempR+j*tempI;
 			}
 		}
 		
-		fscanf(file2, "%lf", &freq);
+		assert(fscanf(file2, "%lf", &freq));
 		for (int ii=0; ii<4; ii++){
 			for (int jj=0; jj<4; jj++){
-				fscanf(file2, "%lf", &tempR);
-				fscanf(file2, "%lf", &tempI);
+				assert(fscanf(file2, "%lf", &tempR));
+				assert(fscanf(file2, "%lf", &tempI));
 				SM2.data[ii][jj] = tempR+j*tempI;
 			}
 		}
 		
-		fscanf(file3, "%lf", &freq);
+		assert(fscanf(file3, "%lf", &freq));
 		for (int ii=0; ii<4; ii++){
 			for (int jj=0; jj<4; jj++){
-				fscanf(file3, "%lf", &tempR);
-				fscanf(file3, "%lf", &tempI);
+				assert(fscanf(file3, "%lf", &tempR));
+				assert(fscanf(file3, "%lf", &tempI));
 				SM3.data[ii][jj] = tempR+j*tempI;
 			}
 		}
-		
+
 		Network network1 = createNetwork(1, 13);
 		
 		getSMatrixTerminationImp(Z0, 1000.0, &SM4);
@@ -372,7 +380,9 @@ void testNetwork5(){
 			}
 		}
 		fprintf(file, "\n");
-		deleteNetwork(network1);
+		deleteNetwork(&network1);
+
+		progressBar(i, Ns);
 		
 	}
 	

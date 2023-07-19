@@ -7,6 +7,6 @@
 #define eps0 8.85418781762039E-12
 #define eta0 3.76730313461771E+02
 // Math Constants
-#define pi M_PI
+#define pi 3.141592653589793
 
 #endif
